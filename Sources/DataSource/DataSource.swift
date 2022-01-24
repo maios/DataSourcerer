@@ -106,13 +106,13 @@ open class CollectionViewDataSource: NSObject {
 extension CollectionViewDataSource: UICollectionViewDelegate {
 
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let section = self[indexPath.section] else { return }
-        section.cellProvider(at: indexPath.item)?.observer.onCellSelected?()
+        guard let (section, item) = self[indexPath] else { return }
+        section.cellProviders[item]?.observer.onCellSelected?()
     }
 
     open func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        guard let section = self[indexPath.section] else { return }
-        section.cellProvider(at: indexPath.item)?.observer.onCellDeselected?()
+        guard let (section, item) = self[indexPath] else { return }
+        section.cellProviders[item]?.observer.onCellDeselected?()
     }
 }
 #endif

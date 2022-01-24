@@ -4,8 +4,8 @@ import UIKit
 open class Section: Hashable {
     public let sectionIdentifier: AnyHashable
 
-    private var cellProviders: [AnyHashable: CellProvider] = [:]
-    internal var items: [AnyHashable] = []
+    internal private(set) var cellProviders: [AnyHashable: CellProvider] = [:]
+    internal private(set) var items: [AnyHashable] = []
 
     internal private(set) var headerViewProvider: SupplementaryProvider?
     internal private(set) var footerViewProvider: SupplementaryProvider?
@@ -62,11 +62,6 @@ open class Section: Hashable {
     -> UICollectionViewCell? {
 
         cellProviders[item]?.dequeue(in: collectionView, indexPath: indexPath)
-    }
-
-    internal func cellProvider(at itemIndex: Int) -> CellProvider? {
-        guard case 0 ..< items.count = itemIndex else { return nil }
-        return cellProviders[items[itemIndex]]
     }
 }
 #endif
