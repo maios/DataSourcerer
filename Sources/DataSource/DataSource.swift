@@ -56,6 +56,7 @@ open class CollectionViewDataSource: NSObject {
         }
     }
 
+    /// Updates the UI to reflect the state of data, optionally animates the UI changes and evaluates the `completion` handler.
     open func apply(state: State, animated: Bool = true, completion: (() -> Void)? = nil) {
         snapshot.deleteAllItems()
         snapshot.appendSections(state.sections)
@@ -68,6 +69,7 @@ open class CollectionViewDataSource: NSObject {
         dataSource.apply(snapshot, animatingDifferences: animated, completion: completion)
     }
 
+    /// Provides the supplementary view for given `elementKind`.
     open func registerView<View>(
         _ view: View.Type,
         elementKind: String,
@@ -76,6 +78,7 @@ open class CollectionViewDataSource: NSObject {
         supplementaryProviders[elementKind] = .supplementaryProvider(for: elementKind, viewConfiguration: viewConfiguration)
     }
 
+    /// Provides the global layout header view.
     public final func addBoundaryHeader<View>(
         _ view: View.Type,
         viewConfiguration: @escaping (View) -> Void)
@@ -86,6 +89,7 @@ open class CollectionViewDataSource: NSObject {
             viewConfiguration: viewConfiguration)
     }
 
+    /// Provides the global layout footer view.
     public final func addBoundaryFooter<View>(
         _ view: View.Type,
         viewConfiguration: @escaping (View) -> Void)
@@ -109,19 +113,6 @@ extension CollectionViewDataSource: UICollectionViewDelegate {
     open func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         guard let section = self[indexPath.section] else { return }
         section.cellProvider(at: indexPath.item)?.observer.onCellDeselected?()
-    }
-}
-
-// MARK: Builder
-
-extension CollectionViewDataSource {
-
-    @resultBuilder
-    public struct Builder {
-
-        public static func buildBlock(_ sections: Section...) -> [Section] {
-            sections
-        }
     }
 }
 #endif
