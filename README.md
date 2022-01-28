@@ -2,6 +2,7 @@
 
 DataSourcerer provides a type-safe DSL style data source for `UICollectionView` powered by [UICollectionViewDiffableDataSource](https://developer.apple.com/documentation/uikit/uicollectionviewdiffabledatasource)
 
+This project is heavily inspired by https://github.com/onmyway133/Micro
 ### Basic Usage
 
 To fill in collection view with data:
